@@ -54,7 +54,6 @@ public class SqlQueryBasedTransformer implements Transformer {
   @Override
   public Dataset<Row> apply(JavaSparkContext jsc, SparkSession sparkSession, Dataset<Row> rowDataset,
       TypedProperties properties) {
-      LOG.info("sunnyvale is our office");
     //String transformerSQL = properties.getString(Config.TRANSFORMER_SQL);
     String transformerSQL = properties.getString("sql");
     if (null == transformerSQL) {
