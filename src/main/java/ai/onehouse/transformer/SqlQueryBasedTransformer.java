@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package org.apache.hudi.transformer;
+ package ai.onehouse.transformer;
 
 import org.apache.hudi.common.config.TypedProperties;
 import org.apache.hudi.utilities.transform.Transformer;
@@ -28,7 +28,6 @@ import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SparkSession;
 
-import java.util.UUID;
 
 /**
  * A transformer that allows a sql-query template be used to transform the source before writing to Hudi data-set.
@@ -39,8 +38,8 @@ public class SqlQueryBasedTransformer implements Transformer {
 
   private static final Logger LOG = LogManager.getLogger(SqlQueryBasedTransformer.class);
 
-  private static final String SRC_PATTERN = "<SRC>";
-  private static final String TMP_TABLE = "HOODIE_SRC_TMP_TABLE_";
+  //private static final String SRC_PATTERN = "<SRC>";
+  //private static final String TMP_TABLE = "HOODIE_SRC_TMP_TABLE_";
 
   /**
    * Configs supported.
@@ -55,6 +54,7 @@ public class SqlQueryBasedTransformer implements Transformer {
   @Override
   public Dataset<Row> apply(JavaSparkContext jsc, SparkSession sparkSession, Dataset<Row> rowDataset,
       TypedProperties properties) {
+      LOG.info("sunnyvale is our office");
     //String transformerSQL = properties.getString(Config.TRANSFORMER_SQL);
     String transformerSQL = properties.getString("sql");
     if (null == transformerSQL) {
