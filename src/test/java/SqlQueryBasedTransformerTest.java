@@ -52,7 +52,7 @@ class SqlQueryBasedTransformerTest {
 
 
         TypedProperties properties = new TypedProperties();
-        properties.put("sql", "select * from alberttable;");
+        properties.put("sql", "CREATE TABLE student (id INT, name STRING, age INT) USING CSV;");
 
         List<Row> data = Arrays.asList(
                 RowFactory.create(1, "name1", "{\"kind\": \"Ingress\", \"spec\": {\"rules\": [{\"http\": {\"paths\": [1, 2]}}]}}"),
@@ -68,7 +68,7 @@ class SqlQueryBasedTransformerTest {
         inputDF = spark.createDataFrame(data, schema);
 
         SqlQueryBasedTransformer transformer = new SqlQueryBasedTransformer();
-//        Dataset<Row> outputDF = transformer.apply(jsc, spark, inputDF, properties);
+        Dataset<Row> outputDF = transformer.apply(jsc, spark, inputDF, properties);
 
 /*         // construct the expected dataframe
         List<Row> expectedData = Arrays.asList(
@@ -84,6 +84,7 @@ class SqlQueryBasedTransformerTest {
         Dataset<Row> expectedDF = spark.createDataFrame(expectedData, expectedSchema);
  */
         //Assertions.assertEquals(expectedDF.collectAsList(), outputDF.collectAsList());
+        Assertions.assertEquals(0, outputDF.count());
     }
     
 }
