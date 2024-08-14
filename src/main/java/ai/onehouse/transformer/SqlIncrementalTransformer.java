@@ -60,13 +60,16 @@ public class SqlIncrementalTransformer implements Transformer {
     if (null == transformerSQL) {
       throw new IllegalArgumentException("Missing configuration : (" + "sql" + ")");
     }
+    LOG.info("SQL Query for transformation : (" + transformerSQL + ")");
 
     String tmpTable = TMP_TABLE.concat(UUID.randomUUID().toString().replace("-", "_"));
     LOG.info("Registering tmp table : " + tmpTable);
     rowDataset.registerTempTable(tmpTable);
     String sqlStr = transformerSQL.replaceAll(SRC_PATTERN, tmpTable);
-    LOG.debug("SQL Query for transformation : (" + sqlStr + ")");
-    return sparkSession.sql(sqlStr);
+    LOG.info("SQL Query for transformation executed : (" + sqlStr + ")");
+    Dataset<Row> result = sparkSession.sql(sqlStr);
+    LOG.info("SQL Query count: " + result.count());
+    return result;
     
   }
 }

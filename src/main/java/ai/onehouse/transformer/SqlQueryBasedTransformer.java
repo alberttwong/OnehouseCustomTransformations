@@ -59,7 +59,7 @@ public class SqlQueryBasedTransformer implements Transformer {
     String transformerSQL = properties.getString(Config.TRANSFORMER_SQL);
     if (null == transformerSQL) {
       throw new IllegalArgumentException("Missing configuration : (" + "sql" + ")");
-    }
+    } 
 
     LOG.info("SQL Query for transformation : " + transformerSQL );
     return sparkSession.sql(transformerSQL);
