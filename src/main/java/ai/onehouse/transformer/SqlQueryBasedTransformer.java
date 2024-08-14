@@ -28,6 +28,7 @@ import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SparkSession;
 
+import java.util.UUID;
 
 /**
  * A transformer that allows a sql-query template be used to transform the source before writing to Hudi data-set.
@@ -38,29 +39,30 @@ public class SqlQueryBasedTransformer implements Transformer {
 
   private static final Logger LOG = LogManager.getLogger(SqlQueryBasedTransformer.class);
 
-  //private static final String SRC_PATTERN = "<SRC>";
-  //private static final String TMP_TABLE = "HOODIE_SRC_TMP_TABLE_";
+  private static final String SRC_PATTERN = "<SRC>";
+  private static final String TMP_TABLE = "HOODIE_SRC_TMP_TABLE_";
 
   /**
    * Configs supported.
    */
-  /*
+
   static class Config {
 
-    private static final String TRANSFORMER_SQL = "hoodie.deltastreamer.transformer.sql";
+    //private static final String TRANSFORMER_SQL = "hoodie.deltastreamer.transformer.sql";
+    private static final String TRANSFORMER_SQL = "sql";
   }
-     */
+
 
   @Override
   public Dataset<Row> apply(JavaSparkContext jsc, SparkSession sparkSession, Dataset<Row> rowDataset,
       TypedProperties properties) {
-    //String transformerSQL = properties.getString(Config.TRANSFORMER_SQL);
-    String transformerSQL = properties.getString("sql");
+    String transformerSQL = properties.getString(Config.TRANSFORMER_SQL);
     if (null == transformerSQL) {
       throw new IllegalArgumentException("Missing configuration : (" + "sql" + ")");
     }
 
     LOG.info("SQL Query for transformation : " + transformerSQL );
     return sparkSession.sql(transformerSQL);
+    
   }
 }
