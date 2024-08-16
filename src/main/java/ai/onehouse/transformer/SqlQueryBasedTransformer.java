@@ -50,6 +50,24 @@ public class SqlQueryBasedTransformer implements Transformer {
       TypedProperties properties) {
     String transformerSQL = getStringWithAltKeys(properties, SqlTransformerConfig.TRANSFORMER_SQL);
 
+
+/*     33-thread-4} Registering tmp table: HOODIE_SRC_TMP_TABLE_7e8e98da_fb77_4334_9fdb_8957c5d6e7b1 
+    2024-08-16T03:19:14.192Z INFO ai.onehouse.transformer.SqlQueryBasedTransformer {database.table=sales_default.public_orders} {thread_id=177} {thread_name=pool-33-thread-4} SQL Database/Table/Current Database List for transformation: +-------+----------------+----------------------------------------+
+    |name   |description     |locationUri                             |
+    +-------+----------------+----------------------------------------+
+    |default|default database|file:/opt/spark/work-dir/spark-warehouse|
+    +-------+----------------+----------------------------------------+
+     +---------------------------------------------------------+--------+-----------+---------+-----------+
+    |name                                                     |database|description|tableType|isTemporary|
+    +---------------------------------------------------------+--------+-----------+---------+-----------+
+    |hoodie_src_tmp_table_5a8eb33c_f0a8_4730_abbf_b9d7449e817c|null    |null       |TEMPORARY|true       |
+    |hoodie_src_tmp_table_7e8e98da_fb77_4334_9fdb_8957c5d6e7b1|null    |null       |TEMPORARY|true       |
+    |hoodie_src_tmp_table_87a7c4e1_57ca_450e_806d_d3f1cf7da150|null    |null       |TEMPORARY|true       |
+    |hoodie_src_tmp_table_fe84c205_07c3_479f_9b91_ecacfd40a073|null    |null       |TEMPORARY|true       |
+    +---------------------------------------------------------+--------+-----------+---------+-----------+
+     default  */
+
+
     try {
       // tmp table name doesn't like dashes
       String tmpTable = TMP_TABLE.concat(UUID.randomUUID().toString().replace("-", "_"));
