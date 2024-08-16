@@ -54,11 +54,15 @@ public class SqlQueryBasedTransformer implements Transformer {
       // tmp table name doesn't like dashes
       String tmpTable = TMP_TABLE.concat(UUID.randomUUID().toString().replace("-", "_"));
       LOG.info("Registering tmp table: {}", tmpTable);
+      //createOrReplaceTempView per API docs is not tied to any catalog.  Must use createOrReplaceGlobalTempView.
       rowDataset.createOrReplaceTempView(tmpTable);
+      //rowDataset.createOrReplaceGlobalTempView(tmpTable);
+      LOG.info("SQL Database/Table/Current Database List for transformation: {} {} {}", sparkSession.catalog().listDatabases().showString(10,0,false), sparkSession.catalog().listTables().showString(10,0,false), sparkSession.catalog().currentDatabase());
       String sqlStr = transformerSQL.replaceAll(SRC_PATTERN, tmpTable);
-      LOG.debug("SQL Query for transformation: {}", sqlStr);
+      LOG.info("SQL Query for transformation: {}", sqlStr);
       Dataset<Row> transformed = sparkSession.sql(sqlStr);
       sparkSession.catalog().dropTempView(tmpTable);
+      //sparkSession.catalog().dropGlobalTempView(tmpTable);
       return transformed;
     } catch (Exception e) {
       throw new HoodieTransformExecutionException("Failed to apply sql query based transformer", e);
