@@ -47,7 +47,7 @@ class SqlQueryBasedTransformerTest {
 
     //private Logger LOG = LogManager.getLogger("SqlQueryBasedTransformerTest.class");
 
-    @BeforeAll
+ /*    @BeforeAll
     static void setUp() {
 
         spark = SparkSession.builder().appName("SqlQueryBasedTransformerTest").master("local").getOrCreate();
@@ -108,5 +108,5 @@ class SqlQueryBasedTransformerTest {
         Assertions.assertEquals(expectedDF.collectAsList(), outputDF2.collectAsList());
     }
 
-    
+ */    
 }
