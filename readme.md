@@ -45,3 +45,11 @@ INSERT INTO toys(toy_id, name, price)
 VALUES
     ('203', 'Jobs', '2000');
 ```
+
+Onehouse setup
+
+If not using quarantine (_event_lsn is required by debezium)  
+`hoodie.streamer.transformer.sql=select toy_id, name, price, '01-02-20' as date, CAST(price AS String) AS price_string, _event_lsn from <SRC>`
+
+If using quarantine (_corrupt_record is required by quarantine, _event_lsn is required by debezium)
+`hoodie.streamer.transformer.sql=select toy_id, name, price, '01-02-20' as date, CAST(price AS String) AS price_string, _event_lsn, _corrupt_record from <SRC>`
